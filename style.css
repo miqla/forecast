@@ -1,0 +1,19 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Poppins", sans-serif;
+}
+
+.headline {
+  width: 95%;
+  margin: 20px auto;
+  background-color: rgb(201, 240, 255);
+  border-radius: 20px;
+  display: flex;
+  gap: 40px;
+  padding: 40px;
+}
