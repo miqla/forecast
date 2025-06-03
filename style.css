@@ -6,8 +6,10 @@
 
 body {
   font-family: "Poppins", sans-serif;
+  color: rgb(19, 19, 19);
 }
 
+/* card headline */
 .headline {
   width: 95%;
   margin: 20px auto;
@@ -18,13 +20,52 @@ body {
   padding: 40px;
 }
 
-.boxHead {
+.box-head {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
 }
 
-.boxSuhu {
+.waktu {
+  font-size: 2em;
+  font-weight: 700;
+  color: rgb(61, 61, 61);
+}
+
+.box-suhu {
   display: flex;
   gap: 2rem;
+  align-items: baseline;
+}
+
+.box-suhu p:nth-child(1) {
+  font-size: 3em;
+  font-weight: 800;
+  color: rgb(29, 29, 29);
+}
+
+.box-suhu p {
+  font-size: 1.5em;
+}
+
+.box-suhu p span {
+  font-size: 2em;
+}
+
+.box-legend {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.box-legend p {
+  display: block;
+  border: 1px solid rgb(179, 179, 179);
+  border-radius: 5px;
+  text-wrap: nowrap;
+  padding: 5px;
+}
+
+.box-legend p span {
+  font-weight: bold;
 }
