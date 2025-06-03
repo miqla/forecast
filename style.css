@@ -17,3 +17,14 @@ body {
   gap: 40px;
   padding: 40px;
 }
+
+.boxHead {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.boxSuhu {
+  display: flex;
+  gap: 2rem;
+}
