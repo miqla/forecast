@@ -95,3 +95,32 @@ main {
   border: 1px solid rgb(0, 60, 255);
   color: rgb(0, 60, 255);
 }
+
+/* card details */
+.card-container {
+  display: flex;
+  gap: 3rem;
+}
+
+.card {
+  background-color: rgb(201, 240, 255);
+  border-radius: 20px;
+  padding: 40px;
+}
+
+.card-box {
+  border: 1px solid rgb(179, 179, 179);
+  border-radius: 5px;
+  padding: 5px;
+}
+
+.card-box > p {
+  display: flex;
+  justify-content: space-between;
+  padding: 5px 10px;
+  border-bottom: 1px solid rgb(179, 179, 179);
+}
+
+.card-box p:last-child {
+  border-bottom: none;
+}
