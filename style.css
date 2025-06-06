@@ -129,6 +129,10 @@ main {
   padding: 5px;
 }
 
+.card-box span{
+  font-weight: 700;
+}
+
 .card-box > p {
   display: flex;
   justify-content: space-between;
