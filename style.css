@@ -100,6 +100,7 @@ main {
 .card-container {
   display: flex;
   gap: 3rem;
+  overflow: auto;
 }
 
 .card {
@@ -112,7 +113,7 @@ main {
   font-size: 1.5rem;
 }
 
-.card .suhu{
+.card .suhu {
   font-size: 3rem;
   font-weight: 700;
 }
@@ -129,7 +130,7 @@ main {
   padding: 5px;
 }
 
-.card-box span{
+.card-box span {
   font-weight: 700;
 }
 

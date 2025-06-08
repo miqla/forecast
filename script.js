@@ -1,5 +1,5 @@
 const url =
-  "https://api.open-meteo.com/v1/forecast?latitude=52.52&longitude=13.41&daily=temperature_2m_min,weather_code&hourly=,temperature_2m,weather_code,wind_speed_10m,relative_humidity_2m,wind_direction_10m,visibility&current=temperature_2m,relative_humidity_2m,wind_speed_10m,wind_direction_10m,weather_code&timezone=Asia%2FBangkok";
+  "https://api.open-meteo.com/v1/forecast?latitude=52.52&longitude=13.41&daily=weather_code,temperature_2m_min,wind_speed_10m_max,wind_direction_10m_dominant&hourly=,temperature_2m,weather_code,wind_speed_10m,relative_humidity_2m,wind_direction_10m,visibility&current=relative_humidity_2m,temperature_2m,wind_speed_10m,wind_direction_10m,weather_code&timezone=Asia%2FBangkok";
 
 function formatDate(date) {
   const options = {
@@ -26,6 +26,17 @@ function formatDate3(date) {
   const options = {
     month: "long",
     day: "numeric",
+  };
+  let result = new Date(date).toLocaleDateString("id-ID", options);
+  return result;
+}
+
+function formatDate4(date) {
+  const options = {
+    hour: "numeric",
+    minute: "numeric",
+    hour12: false,
+    timeZone: "Asia/Jakarta",
   };
   let result = new Date(date).toLocaleDateString("id-ID", options);
   return result;
@@ -145,12 +156,16 @@ async function fetchData() {
             alt=""
           />
           <p class="suhu">${forecast.daily.temperature_2m_min[i]}&deg;C</p>
-          <p class="weather-name">Cerah Berawan</p>
+          <p class="weather-name">${weatherCode(
+            forecast.daily.weather_code[i]
+          )}</p>
           <div class="card-box">
-            <p>💦 <span>79%</span></p>
-            <p>💨 <span>2km/jam</span></p>
-            <p>🧭 <span>Barat laut</span></p>
-            <p>👀 <span>> 10 km</span></p>
+            <p>💦 <span>${forecast.hourly.relative_humidity_2m[i]}%</span></p>
+            <p>💨 <span>${forecast.daily.wind_speed_10m_max[i]}km/jam</span></p>
+            <p>🧭 <span>${direction(
+              forecast.daily.wind_direction_10m_dominant[i]
+            )}</span></p>
+            <p>👀 <span>${forecast.hourly.visibility[i] / 1000} km</span></p>
           </div>
         </div>`;
       cardContainer.innerHTML += newList;
@@ -181,7 +196,7 @@ async function fetchData() {
           // card items
           const newList2 = `
             <div class="card">
-          <h4>${formatDate2(filteredObj.time[i])}</h4>
+          <h4>${formatDate4(filteredObj.time[i])}</h4>
           <img
             src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRSyCftnvcb2Sqg4hg7wzqpNbyf48WEBWWQsQ&s"
             alt=""
