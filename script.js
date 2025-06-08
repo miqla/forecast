@@ -1,4 +1,4 @@
-const url= "https://api.open-meteo.com/v1/forecast?latitude=52.52&longitude=13.41&daily=temperature_2m_min,weather_code&hourly=,temperature_2m,weather_code,wind_speed_10m,relative_humidity_2m,wind_direction_10m,visibility&current=temperature_2m,relative_humidity_2m,wind_speed_10m,wind_direction_10m,weather_code&timezone=auto";
+const url= "https://api.open-meteo.com/v1/forecast?latitude=52.52&longitude=13.41&daily=temperature_2m_min,weather_code&hourly=,temperature_2m,weather_code,wind_speed_10m,relative_humidity_2m,wind_direction_10m,visibility&current=temperature_2m,relative_humidity_2m,wind_speed_10m,wind_direction_10m,weather_code&timezone=Asia%2FBangkok";
 
 function formatDate(date){
     const options = {
@@ -91,6 +91,11 @@ function direction(degree){
         return "Barat Laut ↘";
     }
 }
+
+const now = new Date();
+const formattedDate = now.toISOString().slice(0, 19);
+console.log(formattedDate);
+console.log(Date.now());
 
 async function fetchData(){
     try {
