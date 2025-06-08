@@ -92,11 +92,6 @@ function direction(degree){
     }
 }
 
-const now = new Date();
-const formattedDate = now.toISOString().slice(0, 19);
-console.log(formattedDate);
-console.log(Date.now());
-
 async function fetchData(){
     try {
         const boxHead = document.querySelector(".box-head");
@@ -119,6 +114,10 @@ async function fetchData(){
             <p>👀 Jarak pandang: <span>${forecast.hourly.visibility[0]/1000} km</span></p>
           </div>`;
         boxHead.innerHTML += headerList;
+
+        const title = document.querySelector(".title span");
+        const titleDate = formatDate2(forecast.current.time);
+        title.innerHTML += titleDate;
 
         for(let i = 0; i < forecast.daily.time.length; i++){
             // date button items
