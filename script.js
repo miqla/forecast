@@ -1,106 +1,107 @@
-const url= "https://api.open-meteo.com/v1/forecast?latitude=52.52&longitude=13.41&daily=temperature_2m_min,weather_code&hourly=,temperature_2m,weather_code,wind_speed_10m,relative_humidity_2m,wind_direction_10m,visibility&current=temperature_2m,relative_humidity_2m,wind_speed_10m,wind_direction_10m,weather_code&timezone=Asia%2FBangkok";
+const url =
+  "https://api.open-meteo.com/v1/forecast?latitude=52.52&longitude=13.41&daily=temperature_2m_min,weather_code&hourly=,temperature_2m,weather_code,wind_speed_10m,relative_humidity_2m,wind_direction_10m,visibility&current=temperature_2m,relative_humidity_2m,wind_speed_10m,wind_direction_10m,weather_code&timezone=Asia%2FBangkok";
 
-function formatDate(date){
-    const options = {
-        weekday: "long",
-        year: "numeric",
-        month: "long",
-        day: "numeric"
-    };
-    let result = new Date(date).toLocaleDateString("id-ID", options);
-    return result;
+function formatDate(date) {
+  const options = {
+    weekday: "long",
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  };
+  let result = new Date(date).toLocaleDateString("id-ID", options);
+  return result;
 }
 
-function formatDate2(date){
-    const options = {
-        year: "numeric",
-        month: "long",
-        day: "numeric"
-    };
-    let result = new Date(date).toLocaleDateString("id-ID", options);
-    return result;
+function formatDate2(date) {
+  const options = {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  };
+  let result = new Date(date).toLocaleDateString("id-ID", options);
+  return result;
 }
 
-function formatDate3(date){
-    const options = {
-        month: "long",
-        day: "numeric"
-    };
-    let result = new Date(date).toLocaleDateString("id-ID", options);
-    return result;
+function formatDate3(date) {
+  const options = {
+    month: "long",
+    day: "numeric",
+  };
+  let result = new Date(date).toLocaleDateString("id-ID", options);
+  return result;
 }
 
-function weatherCode(code){
-    const codeList = new Map([
-        [0, "Langit cerah"],
-        [1, "Sebagian besar cerah"],
-        [2, "Sebagian besar berawan"],
-        [3, "Sebagian besar mendung"],
-        [45, "Berkabut"],
-        [48, "Berkabut es"],
-        [51, "Gerimis ringan"],
-        [53, "Gerimis sedang"],
-        [55, "Gerimis lebat"],
-        [56, "Gerimis beku ringan"],
-        [57, "Gerimis beku padat"],
-        [61, "Hujan ringan"],
-        [63, "Hujan sedang"],
-        [65, "Hujan lebat"],
-        [66, "Hujan beku ringan"],
-        [67, "Hujan beku lebat"],
-        [71, "Hujan salju ringan"],
-        [73, "Hujan salju sedang"],
-        [75, "Hujan salju lebat"],
-        [77, "Butiran salju"],
-        [80, "Hujan gerimis ringan"],
-        [81, "Hujan gerimis sedang"],
-        [82, "Hujan gerimis lebat"],
-        [85, "Hujan salju ringan"],
-        [86, "Hujan salju lebat"],
-        [95, "Badai petir ringan atau sedang"],
-        [96, "Badai petir dengan hujan es ringan"],
-        [99, "Badai petir dengan hujan es lebat"],
-    ])
-    let weather = codeList.get(code);
-    return weather;
+function weatherCode(code) {
+  const codeList = new Map([
+    [0, "Langit cerah"],
+    [1, "Sebagian besar cerah"],
+    [2, "Sebagian besar berawan"],
+    [3, "Sebagian besar mendung"],
+    [45, "Berkabut"],
+    [48, "Berkabut es"],
+    [51, "Gerimis ringan"],
+    [53, "Gerimis sedang"],
+    [55, "Gerimis lebat"],
+    [56, "Gerimis beku ringan"],
+    [57, "Gerimis beku padat"],
+    [61, "Hujan ringan"],
+    [63, "Hujan sedang"],
+    [65, "Hujan lebat"],
+    [66, "Hujan beku ringan"],
+    [67, "Hujan beku lebat"],
+    [71, "Hujan salju ringan"],
+    [73, "Hujan salju sedang"],
+    [75, "Hujan salju lebat"],
+    [77, "Butiran salju"],
+    [80, "Hujan gerimis ringan"],
+    [81, "Hujan gerimis sedang"],
+    [82, "Hujan gerimis lebat"],
+    [85, "Hujan salju ringan"],
+    [86, "Hujan salju lebat"],
+    [95, "Badai petir ringan atau sedang"],
+    [96, "Badai petir dengan hujan es ringan"],
+    [99, "Badai petir dengan hujan es lebat"],
+  ]);
+  let weather = codeList.get(code);
+  return weather;
 }
 
-function direction(degree){
-    if (degree === 0 || degree === 360){
-        return "Utara ↓";
-    }
-    if (degree === 90){
-        return "Timur ←";
-    }
-    if (degree === 180){
-        return "Selatan ↑";
-    }
-    if (degree === 270){
-        return "Barat →";
-    }
-    if(degree > 0 && degree < 90){
-        return "Timur Laut ↙";
-    }
-    if(degree > 90 && degree < 180){
-        return "Tenggara ↖";
-    }
-    if(degree > 180 && degree < 270){
-        return "Barat Daya ↗";
-    }
-    if(degree > 270 && degree < 360){
-        return "Barat Laut ↘";
-    }
+function direction(degree) {
+  if (degree === 0 || degree === 360) {
+    return "Utara ↓";
+  }
+  if (degree === 90) {
+    return "Timur ←";
+  }
+  if (degree === 180) {
+    return "Selatan ↑";
+  }
+  if (degree === 270) {
+    return "Barat →";
+  }
+  if (degree > 0 && degree < 90) {
+    return "Timur Laut ↙";
+  }
+  if (degree > 90 && degree < 180) {
+    return "Tenggara ↖";
+  }
+  if (degree > 180 && degree < 270) {
+    return "Barat Daya ↗";
+  }
+  if (degree > 270 && degree < 360) {
+    return "Barat Laut ↘";
+  }
 }
 
-async function fetchData(){
-    try {
-        const boxHead = document.querySelector(".box-head");
-        const cardContainer = document.querySelector(".card-container");
-        const res = await fetch(url);
-        const forecast = await res.json();
-        // see fetch data
-        console.log(forecast);
-        const headerList = `
+async function fetchData() {
+  try {
+    const boxHead = document.querySelector(".box-head");
+    const cardContainer = document.querySelector(".card-container");
+    const res = await fetch(url);
+    const forecast = await res.json();
+    // see fetch data
+    console.log(forecast);
+    const headerList = `
         <p class="waktu">${formatDate(forecast.current.time)}</p>
           <div class="box-suhu">
             <p>${forecast.current.temperature_2m}&deg;C</p>
@@ -108,24 +109,35 @@ async function fetchData(){
             <p>di Jakarta</p>
           </div>
           <div class="box-legend">
-            <p>💦 Kelembapan: <span>${forecast.current.relative_humidity_2m}%</span></p>
-            <p>💨 Kecepatan angin: <span>${forecast.current.wind_speed_10m}km/jam</span></p>
-            <p>🧭 Arah angin dari: <span>${direction(forecast.current.wind_direction_10m)}</span></p>
-            <p>👀 Jarak pandang: <span>${forecast.hourly.visibility[0]/1000} km</span></p>
+            <p>💦 Kelembapan: <span>${
+              forecast.current.relative_humidity_2m
+            }%</span></p>
+            <p>💨 Kecepatan angin: <span>${
+              forecast.current.wind_speed_10m
+            }km/jam</span></p>
+            <p>🧭 Arah angin dari: <span>${direction(
+              forecast.current.wind_direction_10m
+            )}</span></p>
+            <p>👀 Jarak pandang: <span>${
+              forecast.hourly.visibility[0] / 1000
+            } km</span></p>
           </div>`;
-        boxHead.innerHTML += headerList;
+    boxHead.innerHTML += headerList;
 
-        const title = document.querySelector(".title span");
-        const titleDate = formatDate2(forecast.current.time);
-        title.innerHTML += titleDate;
+    const title = document.querySelector(".title span");
+    const titleDate = formatDate2(forecast.current.time);
+    title.innerHTML += titleDate;
 
-        for(let i = 0; i < forecast.daily.time.length; i++){
-            // date button items
-            const buttonBox = document.querySelector(".button-box")
-            const buttonList = `<button>${formatDate3(forecast.daily.time[i])}</button>`
-            buttonBox.innerHTML += buttonList;
-            // card items
-            const newList = `
+    for (let i = 0; i < forecast.daily.time.length; i++) {
+      // date button items
+      const buttonBox = document.querySelector(".button-box");
+      const buttonList = `<button value="${forecast.daily.time[i].slice(
+        0,
+        10
+      )}">${formatDate3(forecast.daily.time[i])}</button>`;
+      buttonBox.innerHTML += buttonList;
+      // card items
+      const newList = `
             <div class="card">
           <h4>${formatDate2(forecast.daily.time[i])}</h4>
           <img
@@ -141,11 +153,55 @@ async function fetchData(){
             <p>👀 <span>> 10 km</span></p>
           </div>
         </div>`;
-        cardContainer.innerHTML += newList;
-        }
-    } catch (error) {
-        console.log(error)
+      cardContainer.innerHTML += newList;
     }
+
+    const button = document.querySelectorAll(".button-box button");
+    button.forEach((btn) =>
+      btn.addEventListener("click", (e) => {
+        let param = e.target.value;
+        // hourly data
+        const indexFilteredDate = forecast.hourly.time
+          .map((element, index) => (element.includes(param) ? index : -1))
+          .filter((index) => index !== -1);
+
+        // return object of filtered value by index
+        const filteredObj = Object.fromEntries(
+          Object.entries(forecast.hourly).map(([key, values]) => [
+            key,
+            values.filter((element, index) =>
+              indexFilteredDate.includes(index)
+            ),
+          ])
+        );
+        console.log(filteredObj);
+        cardContainer.innerHTML = "";
+
+        for (let i = 0; i < filteredObj.time.length; i++) {
+          // card items
+          const newList2 = `
+            <div class="card">
+          <h4>${formatDate2(filteredObj.time[i])}</h4>
+          <img
+            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRSyCftnvcb2Sqg4hg7wzqpNbyf48WEBWWQsQ&s"
+            alt=""
+          />
+          <p class="suhu">${filteredObj.temperature_2m[i]}&deg;C</p>
+          <p class="weather-name">Cerah Berawan</p>
+          <div class="card-box">
+            <p>💦 <span>79%</span></p>
+            <p>💨 <span>2km/jam</span></p>
+            <p>🧭 <span>Barat laut</span></p>
+            <p>👀 <span>> 10 km</span></p>
+          </div>
+        </div>`;
+          cardContainer.innerHTML += newList2;
+        }
+      })
+    );
+  } catch (error) {
+    console.log(error);
+  }
 }
 
 fetchData();
