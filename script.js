@@ -135,10 +135,6 @@ async function fetchData() {
           </div>`;
     boxHead.innerHTML += headerList;
 
-    const title = document.querySelector(".title span");
-    const titleDate = formatDate2(forecast.current.time);
-    title.innerHTML += titleDate;
-
     for (let i = 0; i < forecast.daily.time.length; i++) {
       // date button items
       const buttonBox = document.querySelector(".button-box");
@@ -175,6 +171,11 @@ async function fetchData() {
     button.forEach((btn) =>
       btn.addEventListener("click", (e) => {
         let param = e.target.value;
+
+        const title = document.querySelector(".title span");
+        const titleDate = formatDate2(param);
+        title.innerHTML = titleDate;
+
         // hourly data
         const indexFilteredDate = forecast.hourly.time
           .map((element, index) => (element.includes(param) ? index : -1))
