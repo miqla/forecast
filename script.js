@@ -203,12 +203,16 @@ async function fetchData() {
             alt=""
           />
           <p class="suhu">${filteredObj.temperature_2m[i]}&deg;C</p>
-          <p class="weather-name">Cerah Berawan</p>
+          <p class="weather-name">${weatherCode(
+            filteredObj.weather_code[i]
+          )}</p>
           <div class="card-box">
-            <p>💦 <span>79%</span></p>
-            <p>💨 <span>2km/jam</span></p>
-            <p>🧭 <span>Barat laut</span></p>
-            <p>👀 <span>> 10 km</span></p>
+            <p>💦 <span>${filteredObj.relative_humidity_2m[i]}%</span></p>
+            <p>💨 <span>${filteredObj.wind_speed_10m[i]}km/jam</span></p>
+            <p>🧭 <span>${direction(
+              filteredObj.wind_direction_10m[i]
+            )}</span></p>
+            <p>👀 <span>${filteredObj.visibility[i] / 1000} km</span></p>
           </div>
         </div>`;
           cardContainer.innerHTML += newList2;
