@@ -7,9 +7,13 @@ function formatDate(date) {
     year: "numeric",
     month: "long",
     day: "numeric",
+    hour: "numeric",
+    minute: "numeric",
+    hour12: false,
+    timeZone: "Asia/Jakarta",
   };
   let result = new Date(date).toLocaleDateString("id-ID", options);
-  return result;
+  return (result += " WIB");
 }
 
 function formatDate2(date) {
@@ -176,7 +180,7 @@ async function fetchData() {
         const titleDate = formatDate2(param);
         title.innerHTML = titleDate;
 
-        // hourly data
+        // hourly data index
         const indexFilteredDate = forecast.hourly.time
           .map((element, index) => (element.includes(param) ? index : -1))
           .filter((index) => index !== -1);
