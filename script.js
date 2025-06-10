@@ -13,7 +13,7 @@ function formatDate(date) {
     timeZone: "Asia/Jakarta",
   };
   let result = new Date(date).toLocaleDateString("id-ID", options);
-  return (result += " WIB");
+  return result;
 }
 
 function formatDate2(date) {
@@ -108,16 +108,34 @@ function direction(degree) {
   }
 }
 
+// set GMT timeZone display
+function timeZone(gmt) {
+  if (gmt == "GMT+7") {
+    return "WIB";
+  }
+  if (gmt == "GMT+8") {
+    return "WITA";
+  }
+  if (gmt == "GMT+7") {
+    return "WIT";
+  } else {
+    return gmt;
+  }
+}
+
 async function fetchData() {
   try {
     const boxHead = document.querySelector(".box-head");
     const cardContainer = document.querySelector(".card-container");
     const res = await fetch(url);
     const forecast = await res.json();
+
     // see fetch data
     console.log(forecast);
     const headerList = `
-        <p class="waktu">${formatDate(forecast.current.time)}</p>
+        <p class="waktu">${formatDate(forecast.current.time)} ${timeZone(
+      forecast.timezone_abbreviation
+    )}</p>
           <div class="box-suhu">
             <p>${forecast.current.temperature_2m}&deg;C</p>
             <p>${weatherCode(forecast.current.weather_code)} <span>.</span></p>
@@ -201,7 +219,9 @@ async function fetchData() {
           // card items
           const newList2 = `
             <div class="card">
-          <h4>${filteredObj.time[i].slice(11, 16)} WIB</h4>
+          <h4>${filteredObj.time[i].slice(11, 16)} ${timeZone(
+            forecast.timezone_abbreviation
+          )}</h4>
           <img
             src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRSyCftnvcb2Sqg4hg7wzqpNbyf48WEBWWQsQ&s"
             alt=""
