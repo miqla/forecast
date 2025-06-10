@@ -1,5 +1,5 @@
 const url =
-  "https://api.open-meteo.com/v1/forecast?latitude=52.52&longitude=13.41&daily=weather_code,temperature_2m_min,wind_speed_10m_max,wind_direction_10m_dominant&hourly=,temperature_2m,weather_code,wind_speed_10m,relative_humidity_2m,wind_direction_10m,visibility&current=relative_humidity_2m,temperature_2m,wind_speed_10m,wind_direction_10m,weather_code&timezone=Asia%2FBangkok";
+  "https://api.open-meteo.com/v1/forecast?latitude=-6.1818&longitude=106.8223&daily=weather_code,temperature_2m_min,wind_speed_10m_max,wind_direction_10m_dominant&hourly=,temperature_2m,weather_code,wind_speed_10m,relative_humidity_2m,wind_direction_10m,visibility&current=relative_humidity_2m,temperature_2m,wind_speed_10m,wind_direction_10m,weather_code&timezone=auto";
 
 function formatDate(date) {
   const options = {
