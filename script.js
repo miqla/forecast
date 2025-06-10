@@ -201,7 +201,7 @@ async function fetchData() {
           // card items
           const newList2 = `
             <div class="card">
-          <h4>${formatDate4(filteredObj.time[i])}</h4>
+          <h4>${filteredObj.time[i].slice(11, 16)} WIB</h4>
           <img
             src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRSyCftnvcb2Sqg4hg7wzqpNbyf48WEBWWQsQ&s"
             alt=""
