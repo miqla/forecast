@@ -35,17 +35,6 @@ function formatDate3(date) {
   return result;
 }
 
-function formatDate4(date) {
-  const options = {
-    hour: "numeric",
-    minute: "numeric",
-    hour12: false,
-    timeZone: "Asia/Jakarta",
-  };
-  let result = new Date(date).toLocaleDateString("id-ID", options);
-  return result;
-}
-
 function weatherCode(code) {
   const codeList = new Map([
     [0, "Langit cerah"],
