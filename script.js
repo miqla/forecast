@@ -10,13 +10,16 @@ search.addEventListener("submit", function (event) {
 
   async function fetchKota() {
     try {
+      const cityPlace = document.querySelector(".jumbotron span");
       const pull = await fetch(url2);
       const result = await pull.json();
       const city = result.results;
 
       function getCity(kota) {
+        let hasil;
         city.forEach(function (e) {
           if (e.name.toLowerCase().includes(kota)) {
+            cityPlace.innerHTML = e.name;
             hasil = e;
             return;
           }
@@ -26,8 +29,152 @@ search.addEventListener("submit", function (event) {
 
       let detail = getCity(value);
       console.log(detail);
+
+      // trial fetch data after klik button ------------------
+      const url3 =
+        "https://api.open-meteo.com/v1/forecast?latitude=" +
+        detail.latitude +
+        "&longitude=" +
+        detail.longitude +
+        "&daily=weather_code,temperature_2m_min,wind_speed_10m_max,wind_direction_10m_dominant&hourly=,temperature_2m,weather_code,wind_speed_10m,relative_humidity_2m,wind_direction_10m,visibility&current=relative_humidity_2m,temperature_2m,wind_speed_10m,wind_direction_10m,weather_code&timezone=auto";
+
+      async function fetchData() {
+        try {
+          const headline = document.querySelector(".headline");
+          const cardContainer = document.querySelector(".card-container");
+          const res = await fetch(url3);
+          const forecast = await res.json();
+
+          // see fetch data
+          console.log(forecast);
+          const headerList = `
+        <img
+            src="img/${forecast.current.weather_code}.png"
+            alt="${weatherCode(forecast.current.weather_code)}"
+          />
+        <div class="box-head">
+        <p class="waktu">${formatDate(forecast.current.time)} ${timeZone(
+            forecast.timezone_abbreviation
+          )}</p>
+          <div class="box-suhu">
+            <p>${forecast.current.temperature_2m}&deg;C</p>
+            <p>${weatherCode(forecast.current.weather_code)} <span>.</span></p>
+            <p>di ${detail.name}</p>
+          </div>
+          <div class="box-legend">
+            <p>💦 Kelembapan: <span>${
+              forecast.current.relative_humidity_2m
+            }%</span></p>
+            <p>💨 Kecepatan angin: <span>${
+              forecast.current.wind_speed_10m
+            }km/jam</span></p>
+            <p>🧭 Arah angin dari: <span>${direction(
+              forecast.current.wind_direction_10m
+            )}</span></p>
+            <p>👀 Jarak pandang: <span>${
+              forecast.hourly.visibility[0] / 1000
+            } km</span></p>
+          </div>
+    </div>`;
+          const buttonBox = document.querySelector(".button-box");
+          headline.innerHTML = "";
+          headline.innerHTML += headerList;
+          buttonBox.innerHTML = "";
+          cardContainer.innerHTML = "";
+
+          for (let i = 0; i < forecast.daily.time.length; i++) {
+            // date button items
+            const buttonList = `<button value="${forecast.daily.time[i].slice(
+              0,
+              10
+            )}">${formatDate3(forecast.daily.time[i])}</button>`;
+            buttonBox.innerHTML += buttonList;
+            // card items
+            const newList = `
+            <div class="card">
+          <h4>${formatDate2(forecast.daily.time[i])}</h4>
+          <img
+            src="img/${forecast.daily.weather_code[i]}.png"
+            alt="${weatherCode(forecast.daily.weather_code[i])}"
+          />
+          <p class="suhu">${forecast.daily.temperature_2m_min[i]}&deg;C</p>
+          <p class="weather-name">${weatherCode(
+            forecast.daily.weather_code[i]
+          )}</p>
+          <div class="card-box">
+            <p>💦 <span>${forecast.hourly.relative_humidity_2m[i]}%</span></p>
+            <p>💨 <span>${forecast.daily.wind_speed_10m_max[i]}km/jam</span></p>
+            <p>🧭 <span>${direction(
+              forecast.daily.wind_direction_10m_dominant[i]
+            )}</span></p>
+            <p>👀 <span>${forecast.hourly.visibility[i] / 1000} km</span></p>
+          </div>
+        </div>`;
+            cardContainer.innerHTML += newList;
+          }
+
+          const button = document.querySelectorAll(".button-box button");
+          button.forEach((btn) =>
+            btn.addEventListener("click", (e) => {
+              let param = e.target.value;
+
+              const title = document.querySelector(".title span");
+              const titleDate = formatDate2(param);
+              title.innerHTML = titleDate;
+
+              // hourly data index
+              const indexFilteredDate = forecast.hourly.time
+                .map((element, index) => (element.includes(param) ? index : -1))
+                .filter((index) => index !== -1);
+
+              // return object of filtered value by index
+              const filteredObj = Object.fromEntries(
+                Object.entries(forecast.hourly).map(([key, values]) => [
+                  key,
+                  values.filter((element, index) =>
+                    indexFilteredDate.includes(index)
+                  ),
+                ])
+              );
+              console.log(filteredObj);
+              cardContainer.innerHTML = "";
+
+              for (let i = 0; i < filteredObj.time.length; i++) {
+                // card items
+                const newList2 = `
+            <div class="card">
+          <h4>${filteredObj.time[i].slice(11, 16)} ${timeZone(
+                  forecast.timezone_abbreviation
+                )}</h4>
+          <img
+            src="img/${filteredObj.weather_code[i]}.png"
+            alt="${weatherCode(filteredObj.weather_code[i])}"
+          />
+          <p class="suhu">${filteredObj.temperature_2m[i]}&deg;C</p>
+          <p class="weather-name">${weatherCode(
+            filteredObj.weather_code[i]
+          )}</p>
+          <div class="card-box">
+            <p>💦 <span>${filteredObj.relative_humidity_2m[i]}%</span></p>
+            <p>💨 <span>${filteredObj.wind_speed_10m[i]}km/jam</span></p>
+            <p>🧭 <span>${direction(
+              filteredObj.wind_direction_10m[i]
+            )}</span></p>
+            <p>👀 <span>${filteredObj.visibility[i] / 1000} km</span></p>
+          </div>
+        </div>`;
+                cardContainer.innerHTML += newList2;
+              }
+            })
+          );
+        } catch (error) {
+          console.log(error);
+        }
+      }
+
+      fetchData();
     } catch (error) {
-      console.log(error);
+      console.log("Kota yang anda cari tidak tersedia");
     }
   }
   fetchKota();
@@ -146,34 +293,6 @@ function timeZone(gmt) {
 
 const url =
   "https://api.open-meteo.com/v1/forecast?latitude=-6.1818&longitude=106.8223&daily=weather_code,temperature_2m_min,wind_speed_10m_max,wind_direction_10m_dominant&hourly=,temperature_2m,weather_code,wind_speed_10m,relative_humidity_2m,wind_direction_10m,visibility&current=relative_humidity_2m,temperature_2m,wind_speed_10m,wind_direction_10m,weather_code&timezone=auto";
-
-// const url2 =
-//   "https://geocoding-api.open-meteo.com/v1/search?name=Jakarta&count=10&language=en&format=json";
-
-// async function fetchKota() {
-//   try {
-//     const pull = await fetch(url2);
-//     const result = await pull.json();
-//     const city = result.results;
-
-//     function getCity(kota) {
-//       let hasil;
-//       city.forEach(function (e) {
-//         if (e.name.toLowerCase().includes(kota)) {
-//           hasil = e;
-//           return;
-//         }
-//       });
-//       return hasil;
-//     }
-
-//     let a = getCity("jakarta");
-//     console.log(a);
-//   } catch (error) {
-//     console.log(error);
-//   }
-// }
-// fetchKota();
 
 async function fetchData() {
   try {
