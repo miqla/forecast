@@ -19,7 +19,8 @@ search.addEventListener("submit", function (event) {
         let hasil;
         city.forEach(function (e) {
           if (e.name.toLowerCase().includes(kota)) {
-            cityPlace.innerHTML = e.name;
+            let location = e.name + ", " + e.country;
+            cityPlace.innerHTML = location;
             hasil = e;
             return;
           }
@@ -41,6 +42,7 @@ search.addEventListener("submit", function (event) {
       async function fetchData() {
         try {
           const headline = document.querySelector(".headline");
+          const buttonBox = document.querySelector(".button-box");
           const cardContainer = document.querySelector(".card-container");
           const res = await fetch(url3);
           const forecast = await res.json();
@@ -62,21 +64,20 @@ search.addEventListener("submit", function (event) {
             <p>di ${detail.name}</p>
           </div>
           <div class="box-legend">
-            <p>💦 Kelembapan: <span>${
+            <p>💦 <span class="note">Kelembapan: </span><span class="bold">${
               forecast.current.relative_humidity_2m
             }%</span></p>
-            <p>💨 Kecepatan angin: <span>${
+            <p>💨 <span class="note">Kecepatan angin: </span><span class="bold">${
               forecast.current.wind_speed_10m
             }km/jam</span></p>
-            <p>🧭 Arah angin dari: <span>${direction(
+            <p>🧭 <span class="note">Arah angin dari: </span><span class="bold">${direction(
               forecast.current.wind_direction_10m
             )}</span></p>
-            <p>👀 Jarak pandang: <span>${
+            <p>👀 <span class="note">Jarak pandang: </span><span class="bold">${
               forecast.hourly.visibility[0] / 1000
             } km</span></p>
           </div>
     </div>`;
-          const buttonBox = document.querySelector(".button-box");
           headline.innerHTML = "";
           headline.innerHTML += headerList;
           buttonBox.innerHTML = "";
@@ -174,6 +175,13 @@ search.addEventListener("submit", function (event) {
 
       fetchData();
     } catch (error) {
+      const errMessage = document.querySelector(".jumbotron p");
+      errMessage.style.display = "block";
+      function show() {
+        errMessage.style.display = "none";
+      }
+      setTimeout(show, 1000);
+
       console.log("Kota yang anda cari tidak tersedia");
     }
   }
@@ -318,16 +326,16 @@ async function fetchData() {
             <p>di Jakarta</p>
           </div>
           <div class="box-legend">
-            <p>💦 Kelembapan: <span>${
+            <p>💦 <span class="note">Kelembapan: </span><span class="bold">${
               forecast.current.relative_humidity_2m
             }%</span></p>
-            <p>💨 Kecepatan angin: <span>${
+            <p>💨 <span class="note">Kecepatan angin: </span><span class="bold">${
               forecast.current.wind_speed_10m
             }km/jam</span></p>
-            <p>🧭 Arah angin dari: <span>${direction(
+            <p>🧭 <span class="note">Arah angin dari: </span><span class="bold">${direction(
               forecast.current.wind_direction_10m
             )}</span></p>
-            <p>👀 Jarak pandang: <span>${
+            <p>👀 <span class="note">Jarak pandang: </span><span class="bold">${
               forecast.hourly.visibility[0] / 1000
             } km</span></p>
           </div>

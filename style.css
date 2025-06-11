@@ -13,6 +13,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+  text-align: center;
   gap: 15px;
   flex-direction: column;
   padding: 20px 0;
@@ -25,7 +26,6 @@ form {
   padding: 2px;
   border: 1px solid currentColor;
   border-radius: 5px;
-  margin: 0 0 30px;
 }
 
 form input {
@@ -65,6 +65,11 @@ form input:focus {
   box-shadow: 0 0 3px 0 #1183d6;
   border-color: #1183d6;
   outline: none;
+}
+
+.jumbotron p {
+  color: red;
+  display: none;
 }
 
 main {
@@ -130,7 +135,7 @@ main {
   padding: 5px;
 }
 
-.box-legend p span {
+.box-legend p .bold {
   font-weight: bold;
 }
 
@@ -139,6 +144,7 @@ main {
   display: flex;
   justify-content: space-between;
   padding: 2rem 0;
+  overflow: auto;
 }
 
 .button-box button {
@@ -179,6 +185,7 @@ main {
 .headline img,
 .card img {
   width: 225px;
+  object-fit: contain;
 }
 
 .card .suhu {
@@ -211,4 +218,60 @@ main {
 
 .card-box p:last-child {
   border-bottom: none;
+}
+
+@media screen and (max-width: 1000px) {
+  .box-suhu {
+    flex-direction: column;
+    gap: 0;
+    margin-bottom: 10px;
+  }
+
+  .box-suhu p span {
+    display: none;
+  }
+
+  .button-box button {
+    padding: 10px 30px;
+  }
+}
+
+@media screen and (max-width: 700px) {
+  .headline {
+    flex-direction: column;
+  }
+  .button-box button {
+    padding: 10px 13px;
+  }
+}
+
+@media screen and (max-width: 450px) {
+  .box-legend {
+    display: block;
+    border: 1px solid rgb(179, 179, 179);
+    border-radius: 5px;
+    padding: 5px;
+  }
+
+  .box-legend .note {
+    display: none;
+  }
+
+  .box-legend > p {
+    display: flex;
+    justify-content: space-between;
+    padding: 5px 10px;
+    border: none;
+    border-bottom: 1px solid rgb(179, 179, 179);
+    border-radius: 0;
+  }
+
+  .box-legend p:last-child {
+    border-bottom: none;
+  }
+
+  .headline,
+  .card {
+    padding: 30px;
+  }
 }
