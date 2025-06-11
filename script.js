@@ -159,8 +159,8 @@ async function fetchData() {
             <div class="card">
           <h4>${formatDate2(forecast.daily.time[i])}</h4>
           <img
-            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRSyCftnvcb2Sqg4hg7wzqpNbyf48WEBWWQsQ&s"
-            alt=""
+            src="img/${forecast.daily.weather_code[i]}.png"
+            alt="${weatherCode(forecast.daily.weather_code[i])}"
           />
           <p class="suhu">${forecast.daily.temperature_2m_min[i]}&deg;C</p>
           <p class="weather-name">${weatherCode(

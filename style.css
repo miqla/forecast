@@ -113,6 +113,10 @@ main {
   font-size: 1.5rem;
 }
 
+.card img {
+  width: 225px;
+}
+
 .card .suhu {
   font-size: 3rem;
   font-weight: 700;
