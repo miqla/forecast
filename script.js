@@ -1,6 +1,9 @@
 const url =
   "https://api.open-meteo.com/v1/forecast?latitude=-6.1818&longitude=106.8223&daily=weather_code,temperature_2m_min,wind_speed_10m_max,wind_direction_10m_dominant&hourly=,temperature_2m,weather_code,wind_speed_10m,relative_humidity_2m,wind_direction_10m,visibility&current=relative_humidity_2m,temperature_2m,wind_speed_10m,wind_direction_10m,weather_code&timezone=auto";
 
+const url2 =
+  "https://geocoding-api.open-meteo.com/v1/search?name=Jakarta&count=10&language=en&format=json";
+
 function formatDate(date) {
   const options = {
     weekday: "long",
@@ -112,9 +115,21 @@ function timeZone(gmt) {
   }
 }
 
+async function fetchKota() {
+  try {
+    const pull = await fetch(url2);
+    const city = await pull.json();
+    console.log(city);
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+fetchKota();
+
 async function fetchData() {
   try {
-    const boxHead = document.querySelector(".box-head");
+    const headline = document.querySelector(".headline");
     const cardContainer = document.querySelector(".card-container");
     const res = await fetch(url);
     const forecast = await res.json();
@@ -122,6 +137,11 @@ async function fetchData() {
     // see fetch data
     console.log(forecast);
     const headerList = `
+        <img
+            src="img/${forecast.current.weather_code}.png"
+            alt="${weatherCode(forecast.current.weather_code)}"
+          />
+        <div class="box-head">
         <p class="waktu">${formatDate(forecast.current.time)} ${timeZone(
       forecast.timezone_abbreviation
     )}</p>
@@ -143,8 +163,9 @@ async function fetchData() {
             <p>👀 Jarak pandang: <span>${
               forecast.hourly.visibility[0] / 1000
             } km</span></p>
-          </div>`;
-    boxHead.innerHTML += headerList;
+          </div>
+    </div>`;
+    headline.innerHTML += headerList;
 
     for (let i = 0; i < forecast.daily.time.length; i++) {
       // date button items
@@ -212,8 +233,8 @@ async function fetchData() {
             forecast.timezone_abbreviation
           )}</h4>
           <img
-            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRSyCftnvcb2Sqg4hg7wzqpNbyf48WEBWWQsQ&s"
-            alt=""
+            src="img/${filteredObj.weather_code[i]}.png"
+            alt="${weatherCode(filteredObj.weather_code[i])}"
           />
           <p class="suhu">${filteredObj.temperature_2m[i]}&deg;C</p>
           <p class="weather-name">${weatherCode(
