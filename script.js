@@ -1,3 +1,38 @@
+const search = document.querySelector(".jumbotron form");
+search.addEventListener("submit", function (event) {
+  event.preventDefault();
+  const value = document.querySelector(".jumbotron input").value;
+
+  let url2 =
+    "https://geocoding-api.open-meteo.com/v1/search?name=" +
+    value +
+    "&count=10&language=en&format=json";
+
+  async function fetchKota() {
+    try {
+      const pull = await fetch(url2);
+      const result = await pull.json();
+      const city = result.results;
+
+      function getCity(kota) {
+        city.forEach(function (e) {
+          if (e.name.toLowerCase().includes(kota)) {
+            hasil = e;
+            return;
+          }
+        });
+        return hasil;
+      }
+
+      let detail = getCity(value);
+      console.log(detail);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  fetchKota();
+});
+
 function formatDate(date) {
   const options = {
     weekday: "long",
@@ -112,33 +147,33 @@ function timeZone(gmt) {
 const url =
   "https://api.open-meteo.com/v1/forecast?latitude=-6.1818&longitude=106.8223&daily=weather_code,temperature_2m_min,wind_speed_10m_max,wind_direction_10m_dominant&hourly=,temperature_2m,weather_code,wind_speed_10m,relative_humidity_2m,wind_direction_10m,visibility&current=relative_humidity_2m,temperature_2m,wind_speed_10m,wind_direction_10m,weather_code&timezone=auto";
 
-const url2 =
-  "https://geocoding-api.open-meteo.com/v1/search?name=Jakarta&count=10&language=en&format=json";
+// const url2 =
+//   "https://geocoding-api.open-meteo.com/v1/search?name=Jakarta&count=10&language=en&format=json";
 
-async function fetchKota() {
-  try {
-    const pull = await fetch(url2);
-    const result = await pull.json();
-    const city = result.results;
+// async function fetchKota() {
+//   try {
+//     const pull = await fetch(url2);
+//     const result = await pull.json();
+//     const city = result.results;
 
-    function getCity(kota) {
-      let hasil;
-      city.forEach(function (e) {
-        if (e.name.toLowerCase().includes(kota)) {
-          hasil = e;
-          return;
-        }
-      });
-      return hasil;
-    }
+//     function getCity(kota) {
+//       let hasil;
+//       city.forEach(function (e) {
+//         if (e.name.toLowerCase().includes(kota)) {
+//           hasil = e;
+//           return;
+//         }
+//       });
+//       return hasil;
+//     }
 
-    let a = getCity("jakarta");
-    console.log(a);
-  } catch (error) {
-    console.log(error);
-  }
-}
-fetchKota();
+//     let a = getCity("jakarta");
+//     console.log(a);
+//   } catch (error) {
+//     console.log(error);
+//   }
+// }
+// fetchKota();
 
 async function fetchData() {
   try {
