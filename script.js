@@ -11,18 +11,44 @@ search.addEventListener("submit", function (event) {
   async function fetchKota() {
     try {
       const cityPlace = document.querySelector(".jumbotron span");
+      const suggestions = document.querySelector(".suggestions");
       const pull = await fetch(url2);
       const result = await pull.json();
       const city = result.results;
 
       // test function search preview
       function searchPreview(keyword) {
-        if (city.length > 1) {
-          for (const cty of city) {
-            const cityPreview = makePreview(cty);
-          }
+        if (!keyword) return;
+        suggestions.innerHTML = "";
+        for (const cty of city) {
+          const li = document.createElement("li");
+          li.setAttribute("key", cty.id);
+          li.innerHTML = `${cty.name}, ${cty.admin3 ? cty.admin3 + "," : ""} ${
+            cty.admin2 ? cty.admin2 + "," : ""
+          } ${cty.admin1 ? cty.admin1 + "," : ""} ${cty.country}`;
+          suggestions.append(li);
         }
+        suggestions.classList.add("visible");
+
+        // Handle clicks on suggestion items
+        const suggestionsEl = document.querySelectorAll(".suggestions li");
+        console.log(suggestionsEl);
+        suggestionsEl.forEach(function (e) {
+          e.addEventListener("click", function () {
+            const val = e.innerHTML;
+            document.querySelector(".jumbotron input").value = val;
+            suggestions.classList.remove("visible");
+          });
+        });
+
+        // Close suggestions if clicking outside
+        document.addEventListener("click", (e) => {
+          if (!search.contains(e.target)) {
+            suggestions.classList.remove("visible");
+          }
+        });
       }
+      searchPreview(value);
 
       function getCity(kota) {
         let hasil;

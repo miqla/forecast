@@ -98,8 +98,8 @@ form input:focus {
 .suggestions li[aria-selected="true"] {
   background: linear-gradient(
     135deg,
-    rgb(189, 236, 255) 0%,
-    rgb(91, 208, 255) 100%
+    rgb(116, 216, 255) 0%,
+    rgb(32, 192, 255) 100%
   );
   color: white;
   outline: none;
