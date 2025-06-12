@@ -202,13 +202,12 @@ input.addEventListener("input", function () {
       }
       searchPreview(value);
     } catch (error) {
-      const errMessage = document.querySelector(".jumbotron p");
-      errMessage.style.display = "block";
-      function show() {
-        errMessage.style.display = "none";
-      }
-      setTimeout(show, 1000);
-
+      //   const errMessage = document.querySelector(".jumbotron p");
+      //   errMessage.style.display = "block";
+      //   function show() {
+      //     errMessage.style.display = "none";
+      //   }
+      //   setTimeout(show, 1000);
       //   console.log(error);
     }
   }
