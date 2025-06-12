@@ -18,7 +18,6 @@ input.addEventListener("input", function () {
       function searchPreview(keyword) {
         if (keyword < 2) return;
         suggestions.innerHTML = "";
-        console.log(keyword);
         for (const cty of city) {
           const li = document.createElement("li");
           li.setAttribute("key", cty.id);
@@ -59,8 +58,6 @@ input.addEventListener("input", function () {
                     const res = await fetch(url3);
                     const forecast = await res.json();
 
-                    // see fetch data
-                    console.log(forecast);
                     const headerList = `
         <img
             src="img/${forecast.current.weather_code}.png"
@@ -212,7 +209,7 @@ input.addEventListener("input", function () {
       }
       setTimeout(show, 1000);
 
-      console.log(error);
+      //   console.log(error);
     }
   }
   fetchKota();
@@ -250,7 +247,6 @@ search.addEventListener("submit", function (event) {
       }
 
       let detail = getCity(value);
-      console.log(detail);
 
       // trial fetch data after klik button ------------------
       const url3 =
@@ -269,7 +265,7 @@ search.addEventListener("submit", function (event) {
           const forecast = await res.json();
 
           // see fetch data
-          console.log(forecast);
+          //   console.log(forecast);
           const headerList = `
         <img
             src="img/${forecast.current.weather_code}.png"
@@ -358,7 +354,7 @@ search.addEventListener("submit", function (event) {
                   ),
                 ])
               );
-              console.log(filteredObj);
+              //   console.log(filteredObj);
               cardContainer.innerHTML = "";
 
               for (let i = 0; i < filteredObj.time.length; i++) {
@@ -403,7 +399,7 @@ search.addEventListener("submit", function (event) {
       }
       setTimeout(show, 1000);
 
-      console.log("Kota yang anda cari tidak tersedia");
+      //   console.log("Kota yang anda cari tidak tersedia");
       console.log(error);
     }
   }
@@ -532,7 +528,7 @@ async function fetchData() {
     const forecast = await res.json();
 
     // see fetch data
-    console.log(forecast);
+    // console.log(forecast);
     const headerList = `
         <img
             src="img/${forecast.current.weather_code}.png"
@@ -619,7 +615,7 @@ async function fetchData() {
             ),
           ])
         );
-        console.log(filteredObj);
+        // console.log(filteredObj);
         cardContainer.innerHTML = "";
 
         for (let i = 0; i < filteredObj.time.length; i++) {
