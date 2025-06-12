@@ -15,6 +15,15 @@ search.addEventListener("submit", function (event) {
       const result = await pull.json();
       const city = result.results;
 
+      // test function search preview
+      function searchPreview(keyword) {
+        if (city.length > 1) {
+          for (const cty of city) {
+            const cityPreview = makePreview(cty);
+          }
+        }
+      }
+
       function getCity(kota) {
         let hasil;
         city.forEach(function (e) {
