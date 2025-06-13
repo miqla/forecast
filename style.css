@@ -20,6 +20,12 @@ body {
   background-color: rgb(230, 248, 255);
 }
 
+.jumbotron .detail-address {
+  color: #555;
+  display: block;
+  margin-bottom: 5px;
+}
+
 form {
   color: #555;
   display: flex;
@@ -281,9 +287,15 @@ main {
   .button-box button {
     padding: 10px 13px;
   }
+  .card-container {
+    gap: 2rem;
+  }
 }
 
 @media screen and (max-width: 450px) {
+  .jumbotron .detail-address {
+    font-size: 14px;
+  }
   .box-legend {
     display: block;
     border: 1px solid rgb(179, 179, 179);
@@ -306,6 +318,10 @@ main {
 
   .box-legend p:last-child {
     border-bottom: none;
+  }
+
+  .card-container {
+    gap: 1rem;
   }
 
   .headline,

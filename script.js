@@ -2,7 +2,7 @@ const input = document.querySelector(".jumbotron input");
 
 input.addEventListener("input", function () {
   const suggestions = document.querySelector(".suggestions");
-  const value = document.querySelector(".jumbotron input").value;
+  const value = document.querySelector(".jumbotron input").value.trim();
 
   let url2 =
     "https://geocoding-api.open-meteo.com/v1/search?name=" +
@@ -21,9 +21,9 @@ input.addEventListener("input", function () {
         for (const cty of city) {
           const li = document.createElement("li");
           li.setAttribute("key", cty.id);
-          li.innerHTML = `${cty.name}, ${cty.admin3 ? cty.admin3 + "," : ""} ${
-            cty.admin2 ? cty.admin2 + "," : ""
-          } ${cty.admin1 ? cty.admin1 + "," : ""} ${cty.country}`;
+          li.innerHTML = `${cty.name}, ${cty.admin3 ? cty.admin3 + ", " : ""}${
+            cty.admin2 ? cty.admin2 + ", " : ""
+          }${cty.admin1 ? cty.admin1 + ", " : ""}${cty.country}`;
           suggestions.append(li);
         }
         suggestions.classList.add("visible");
@@ -39,9 +39,17 @@ input.addEventListener("input", function () {
 
             city.forEach(function (e) {
               if (e.id == key) {
+                const detailAddress = document.querySelector(
+                  ".jumbotron .detail-address"
+                );
                 const cityPlace = document.querySelector(".jumbotron span");
-                let location = e.name + ", " + e.admin1 + "," + e.country;
-                cityPlace.innerHTML = location;
+                let location = `Prakiraan cuaca di ${e.name}, ${
+                  e.admin3 ? e.admin3 + ", " : ""
+                }${e.admin2 ? e.admin2 + ", " : ""}${
+                  e.admin1 ? e.admin1 + ", " : ""
+                }${e.country}`;
+                cityPlace.innerHTML = e.name;
+                detailAddress.innerHTML = location;
                 const url3 =
                   "https://api.open-meteo.com/v1/forecast?latitude=" +
                   e.latitude +
@@ -218,7 +226,7 @@ const search = document.querySelector(".jumbotron form");
 search.addEventListener("submit", function (event) {
   event.preventDefault();
   const suggestions = document.querySelector(".suggestions");
-  const value = document.querySelector(".jumbotron input").value;
+  const value = document.querySelector(".jumbotron input").value.trim();
   suggestions.classList.remove("visible");
   let url2 =
     "https://geocoding-api.open-meteo.com/v1/search?name=" +
@@ -228,6 +236,9 @@ search.addEventListener("submit", function (event) {
   async function fetchKota() {
     try {
       const cityPlace = document.querySelector(".jumbotron span");
+      const detailAddress = document.querySelector(
+        ".jumbotron .detail-address"
+      );
       const pull = await fetch(url2);
       const result = await pull.json();
       const city = result.results;
@@ -236,8 +247,13 @@ search.addEventListener("submit", function (event) {
         let hasil;
         city.forEach(function (e) {
           if (e.name.toLowerCase().includes(kota)) {
-            let location = e.name + ", " + e.country;
-            cityPlace.innerHTML = location;
+            let location = `Prakiraan cuaca di ${e.name}, ${
+              e.admin3 ? e.admin3 + ", " : ""
+            }${e.admin2 ? e.admin2 + ", " : ""}${
+              e.admin1 ? e.admin1 + ", " : ""
+            }${e.country}`;
+            cityPlace.innerHTML = e.name;
+            detailAddress.innerHTML = location;
             hasil = e;
             return;
           }
